@@ -4,7 +4,7 @@
 import os
 import sys
 
-g_mail_core_path = "TODO: 指正mail_core.py 文件位置"
+g_mail_core_path = "TODO: 给出mail_core.py 文件位置, 最好是绝对位置"
 
 def main(argv):
 	#=======================================================
