@@ -3,6 +3,7 @@
 
 import os
 import sys
+import config
 
 g_mail_core_path = "TODO: 给出mail_core.py 文件位置, 最好是绝对位置"
 g_mail_core_path = "./mail_core.py"  # 默认
@@ -21,17 +22,17 @@ def main(argv):
 	#=======================================================
 	# 设置服务器，用户名、口令以及邮箱的后缀, 【可修改部分】
 	#=======================================================
-	host="TODO: 填写SMTP"
+	config_data = config.get_config()
+
+	host=config_data["host"]
 	# 企业邮箱,需要全称
-	user="TODO: 改成自己的邮箱,eg: xyz@gmail.com"
-	show_user_name = "TODO: 改成自己的名字"
 	# 非QQ企业邮箱,只需要用户名
-	# user="TODO:@前面的部分,eg: xyz"
+	user=config_data["user"]
+	show_user_name = config_data["show_user_name"]
+	postfix=config_data["postfix"]
+	server_type=config_data["server_type"]
 
 	pwd=argv[0]
-
-	postfix="TODO:改成邮箱后缀,eg: gamil.com"
-	server_type='TODO: 如果是user中需要带@的全称的，此处为 eim， 否则，为邮箱后缀'
 	#=========================================
 	# 设置邮件内容, 【修改部分】
 	#=========================================

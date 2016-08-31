@@ -10,7 +10,10 @@ g_mail_core_path = "./mail_core.py"  # 默认
 
 def get_help_info():
 	file_name = os.path.basename(__file__)
-	print "python ",file_name, " att1(附件) att2 att3 ..."
+	print "python ",file_name, "-p pwd -r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
+	print "-s, -c, -a 可省略"
+	print "-r 如果未设置，则只给自己发邮件"
+
 
 def main(argv):
 	if len(argv) < 1 :
@@ -33,46 +36,18 @@ def main(argv):
 	#=========================================
 	# 设置邮件内容, 【修改部分】
 	#=========================================
-	# 收件人
-	receivers = [
-			# TODO:添加收件人 eg: "xxxx@gmail.com",
-			]
-	# 主题
-	subject = 'TODO: 添加主题'
-	# 邮件正文
-	content = '''
-		TODO: 添加邮件内容
-		'''
 
 	# 是否备份邮件(发给自己一份)
 	backup = 1
 	# 邮件log
 	log_path = './send_mail.log'
-	# 附件文件列表
-	attachments = [
-			# TODO: 添加附件文件，或者通知参数传入
-			#  "./mail_core.py",
-			#  "./send_mail.py"
-			]
-	for a in argv:
-		attachments.append(a)
 
 	#=========================================
 	# 处理命令，勿改动
 	#=========================================
-	receivers_str = ''
-	for rc in receivers:
-		receivers_str = receivers_str + ' -r "' + rc + '"'
-	attachments_str = ''
-	for at in attachments:
-		attachments_str = attachments_str + ' -a "' + at + '"'
 	# 生成命令
 	if len(show_user_name):
 		show_user_name = '-n "' + show_user_name +'"'
-	if len(subject):
-		subject = '-s "' + subject + '"'
-	if len(content):
-		content = '-c "' + content + '"'
 	if len(log_path):
 		log_path = '-l "' + log_path + '"'
 	if len(server_type):
@@ -80,11 +55,14 @@ def main(argv):
 	if backup > 0:
 		backup = '-b '
 
-	cmd = "python {mail_core} -h {h} -u {u} -p {p} -f {f} {sname} {rs} {s} {c} {ats} {t} {b} {l}".format(
+	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} ".format(
 			mail_core=g_mail_core_path,
-			h=host, u=user, p=pwd, f=postfix, sname=show_user_name, rs=receivers_str,
-			s=subject, c=content, ats=attachments_str,
-			t=server_type, b=backup, l=log_path)
+			h=host, u=user, f=postfix, sname=show_user_name,
+			t=server_type, b=backup, l=log_path, input_argv=argv)
+	if len(pwd) > 4 and pwd[0:4] != 'TODO':
+		cmd = cmd + "-p {p} ".format(p=pwd)
+	for a in argv:
+		cmd = cmd + a + " "
 	# 执行命令
 	os.system(cmd)
 	#=========================================

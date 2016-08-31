@@ -54,4 +54,5 @@ $RECYCLE.BIN/
 
 send_local.py
 send_mail.log
-
+config.py
+*.pyc
