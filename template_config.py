@@ -15,7 +15,7 @@
 # ====================================================
 
 #  import sys
-# import os
+import os
 
 config_data = {
 # host="TODO: 填写SMTP, eg:smtp.xxx.com"
@@ -35,6 +35,12 @@ config_data = {
 	,
 # pwd="TODO:改成自己的密码"
 	"pwd":"TODO:改成自己的密码"
+	,
+# 是否备份邮件(发给自己一份)
+	"backup" : 1
+	,
+# 邮件log
+	"log_path" : os.path.dirname(os.path.abspath(__file__)) + '/send_mail.log'
 }
 
 def get_config():

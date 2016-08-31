@@ -33,14 +33,11 @@ def main(argv):
 	server_type=config_data["server_type"]
 
 	pwd=config_data["pwd"]
-	#=========================================
-	# 设置邮件内容, 【修改部分】
-	#=========================================
 
 	# 是否备份邮件(发给自己一份)
-	backup = 1
+	backup = config_data["backup"]
 	# 邮件log
-	log_path = './send_mail.log'
+	log_path = config_data["log_path"]
 
 	#=========================================
 	# 处理命令，勿改动
