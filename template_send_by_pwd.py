@@ -9,12 +9,15 @@ g_mail_core_path = "./mail_core.py"  # 默认
 
 def get_help_info():
 	file_name = os.path.basename(__file__)
-	print "python ",file_name, " att1(附件) att2 att3 ..."
+	print "python ",file_name, " pwd(密码) att1(附件) att2 att3 ..."
 
 def main(argv):
 	if len(argv) < 1 :
 		print get_help_info()
 		sys.exit(0)
+
+	for a in argv:
+		print a
 	#=======================================================
 	# 设置服务器，用户名、口令以及邮箱的后缀, 【可修改部分】
 	#=======================================================
@@ -24,7 +27,9 @@ def main(argv):
 	show_user_name = "TODO: 改成自己的名字"
 	# 非QQ企业邮箱,只需要用户名
 	# user="TODO:@前面的部分,eg: xyz"
-	pwd="TODO:改成自己的密码"
+
+	pwd=argv[0]
+
 	postfix="TODO:改成邮箱后缀,eg: gamil.com"
 	server_type='TODO: 如果是user中需要带@的全称的，此处为 eim， 否则，为邮箱后缀'
 	#=========================================
@@ -51,7 +56,7 @@ def main(argv):
 			#  "./mail_core.py",
 			#  "./send_mail.py"
 			]
-	for a in argv:
+	for a in argv[1:]:
 		attachments.append(a)
 
 	#=========================================
