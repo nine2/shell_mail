@@ -34,14 +34,12 @@ def main(argv):
 	backup = config_data["backup"]
 	# 邮件log
 	log_path = config_data["log_path"]
+	# 收件人
+	receivers = config_data["receivers"]
 
 	#=========================================
 	# 设置邮件内容, 【修改部分】
 	#=========================================
-	# 收件人
-	receivers = [
-			# TODO:添加收件人 eg: "xxxx@gmail.com",
-			]
 	# 主题
 	subject = 'TODO: 添加主题'
 	# 邮件正文
