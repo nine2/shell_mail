@@ -40,6 +40,8 @@ def main(argv):
 	backup = config_data["backup"]
 	# 邮件log
 	log_path = config_data["log_path"]
+	# 收件人
+	receivers = config_data["receivers"]
 
 	# 默认主题、内容
 	subject = "from " + user
@@ -49,6 +51,9 @@ def main(argv):
 	# 处理命令，勿改动
 	#=========================================
 	# 生成命令
+	receivers_str = ''
+	for rc in receivers:
+		receivers_str = receivers_str + ' -r "' + rc + '"'
 	if len(show_user_name):
 		show_user_name = '-n "' + show_user_name +'"'
 	if len(log_path):
@@ -58,16 +63,16 @@ def main(argv):
 	if backup > 0:
 		backup = '-b '
 
-	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} -s '{s}' -c {c} ".format(
+	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} -s '{s}' -c {c} {rs} ".format(
 			mail_core=g_mail_core_path,
 			h=host, u=user, f=postfix, sname=show_user_name,
 			t=server_type, b=backup, l=log_path,
-			s=subject, c=content,
+			s=subject, c=content,rs=receivers_str,
 			input_argv=argv)
 	if len(pwd) > 4 and pwd[0:4] != 'TODO':
 		cmd = cmd + "-p {p} ".format(p=pwd)
 	for a in argv:
-		cmd = cmd + a + " "
+		cmd = cmd + "\"{av}\"".format(av=a) + " "
 	# 执行命令
 	os.system(cmd)
 	#=========================================

@@ -55,3 +55,4 @@ send_local*
 send_mail.log
 config.py
 *.pyc
+send*.py
