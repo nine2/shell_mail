@@ -5,8 +5,11 @@ import os
 import sys
 import config
 
+file_abs = os.path.abspath(__file__)
+file_dir = os.path.dirname(file_abs)
 g_mail_core_path = "TODO: 给出mail_core.py 文件位置, 最好是绝对位置"
-g_mail_core_path = "./mail_core.py"  # 默认
+g_mail_core_path = file_dir + "/mail_core.py"  # 默认
+
 
 def get_help_info():
 	file_name = os.path.basename(__file__)
