@@ -49,4 +49,6 @@ config_data = {
 }
 
 def get_config():
+	config_data["subject"] = "subject:_from:" + config_data["show_user_name"] + "(" + config_data["user"] + ")"
+	config_data["content"] = "Content____"
 	return config_data

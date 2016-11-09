@@ -47,8 +47,11 @@ def main(argv):
 	receivers = config_data["receivers"]
 
 	# 默认主题、内容
-	subject = "from " + user
-	content = "默认内容"
+	subject = "from " + show_user_name + "(" + user + ")"
+	content = "默认内容\n"
+
+	subject = config_data["subject"]
+	content = config_data["content"]
 
 	#=========================================
 	# 处理命令，勿改动
