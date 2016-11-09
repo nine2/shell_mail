@@ -13,6 +13,8 @@ def get_help_info():
 	print "python ",file_name, "-p pwd -r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
 	print "-s, -c, -a 可省略"
 	print "-r 如果未设置，则只给自己发邮件"
+	print "!!! 注意："
+	print "\t所有传入的单个参数，中间不能有空格!"
 
 
 def main(argv):
@@ -39,6 +41,10 @@ def main(argv):
 	# 邮件log
 	log_path = config_data["log_path"]
 
+	# 默认主题、内容
+	subject = "from " + user
+	content = "默认内容"
+
 	#=========================================
 	# 处理命令，勿改动
 	#=========================================
@@ -52,10 +58,12 @@ def main(argv):
 	if backup > 0:
 		backup = '-b '
 
-	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} ".format(
+	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} -s '{s}' -c {c} ".format(
 			mail_core=g_mail_core_path,
 			h=host, u=user, f=postfix, sname=show_user_name,
-			t=server_type, b=backup, l=log_path, input_argv=argv)
+			t=server_type, b=backup, l=log_path,
+			s=subject, c=content,
+			input_argv=argv)
 	if len(pwd) > 4 and pwd[0:4] != 'TODO':
 		cmd = cmd + "-p {p} ".format(p=pwd)
 	for a in argv:
