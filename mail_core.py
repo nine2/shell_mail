@@ -250,7 +250,6 @@ def main(argv):
 						"log_path=",
 						"help="]
 	# 记录log
-	fl = open(get_log_path(),'a')
 	now_time = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 	now_time = "===========  " + str(now_time)
 	argv_str = ''
@@ -266,13 +265,15 @@ def main(argv):
 		]
 	line = '\n'.join(lines)
 	print line
-	fl.write(line)
-	fl.close()
 	try:
 		if not len(argv):
 			print get_help_info()
 			sys.exit(2)
 		opts, args = getopt.getopt(argv,argv_format_short,argv_format_long)
+		if(len(args)):
+			print "Error: Option not has ", args
+			print get_help_info()
+			sys.exit(2)
 	except getopt.GetoptError:
 		print get_help_info()
 		sys.exit(2)
@@ -325,7 +326,10 @@ def main(argv):
 	#  print 'content=', content
 	#  print 'attachments=',attachments
 	#  print 'backup=',backup
-	#  print 'log_path=', log_path
+	set_log_path(log_path)
+	fl = open(get_log_path(),'a')
+	fl.write(line + "\n")
+	fl.close()
 	print "=========================== "
 	set_sender(host, user, pwd, postfix, show_user_name, server_type)
 	send_mail(receivers, subject, content, attachments, backup, log_path)
