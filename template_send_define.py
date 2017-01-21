@@ -68,6 +68,8 @@ def main(argv):
 		server_type = '-t ' + server_type
 	if backup > 0:
 		backup = '-b '
+	else:
+		backup = ''
 
 	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} -s '{s}' -c {c} {rs} ".format(
 			mail_core=g_mail_core_path,
