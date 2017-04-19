@@ -16,4 +16,5 @@ ls template_*.py | while read fl;do
 	out=${fl##template_}
 	cp $fl $out
 	chmod +x $out
+	cp config.py $HOME/.mail_config.py
 done
