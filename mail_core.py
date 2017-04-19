@@ -259,6 +259,11 @@ def main(argv):
 				argv_str = argv_str + '"' + a + '" '
 			else:
 				argv_str = argv_str + a + ' '
+	argv_str_arr = argv_str.split()
+	idx = argv_str_arr.index("-p") + 1
+	if idx < len(argv_str_arr):
+		argv_str_arr[idx] = "******"
+	argv_str = " ".join(argv_str_arr)
 	lines = [
 		now_time,
 		argv_str,

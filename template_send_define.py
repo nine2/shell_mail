@@ -3,7 +3,18 @@
 
 import os
 import sys
+import getpass
 import config
+import imp
+
+config_data = config.get_config()
+
+home = os.environ["HOME"]
+home_config_path = home + "/.mail_config.py"
+config_home = {}
+if os.path.isfile(home_config_path):
+	home_config = imp.load_source('module.name', home_config_path)
+	config_home = home_config.get_config();
 
 file_abs = os.path.abspath(__file__)
 file_dir = os.path.dirname(file_abs)
@@ -13,31 +24,60 @@ g_mail_core_path = file_dir + "/mail_core.py"  # 默认
 
 def get_help_info():
 	file_name = os.path.basename(__file__)
-	print "python ",file_name, "-p pwd -r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
+	print "config file: ~/.mail_config.py"
+	print ""
+	print "python ",file_name, "-r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
 	print "-s, -c, -a 可省略"
 	print "-r 如果未设置，则只给自己发邮件"
 	print "!!! 注意："
-	print "\t所有传入的单个参数，中间不能有空格!"
+	print "\t所有传入的单个参数，中间不能有空格! 可使用双引号引起来!"
 
 
 def main(argv):
-	if len(argv) < 1 :
-		print get_help_info()
-		sys.exit(0)
+	# if len(argv) < 1 :
+	print get_help_info()
+		# sys.exit(0)
 	#=======================================================
 	# 设置服务器，用户名、口令以及邮箱的后缀, 【可修改部分】
 	#=======================================================
-	config_data = config.get_config()
 
-	host=config_data["host"]
+	for k, v in config_home.items():
+		config_data[k] = v
+
+	for i, v in config_data["host"].items():
+		print i,": ", str(v)
+	idx = 0
+	if len(config_data["host"]) != 1:
+		while not config_data["host"].has_key(idx):
+			idx = int(raw_input("please chose a Email: "))
+	else:
+		idx = 1
+	if not config_data["host"].has_key(idx):
+		return
+	host_data = config_data["host"][idx]
+	host=host_data["host"]
+	postfix=host_data["postfix"]
+	server_type=host_data["server_type"]
+
+	if not len(config_data["user"]):
+		user = raw_input("please input your user: ")
+		config_data["user"] = user
+	else:
+		print "user: ", config_data["user"]
+
+	if not len(config_data["pwd"]):
+		pwd = getpass.getpass("please input your pwd: ")
+		config_data["pwd"] = pwd
+
 	# 企业邮箱,需要全称
 	# 非QQ企业邮箱,只需要用户名
 	user=config_data["user"]
-	show_user_name = config_data["show_user_name"]
-	postfix=config_data["postfix"]
-	server_type=config_data["server_type"]
+	if server_type == "eim" and "@" not in user:
+		user = user.strip() + "@" + postfix.strip()
 
 	pwd=config_data["pwd"]
+
+	show_user_name = config_data["show_user_name"]
 
 	# 是否备份邮件(发给自己一份)
 	backup = config_data["backup"]
@@ -47,11 +87,8 @@ def main(argv):
 	receivers = config_data["receivers"]
 
 	# 默认主题、内容
-	subject = "from " + show_user_name + "(" + user + ")"
-	content = "默认内容\n"
-
-	subject = config_data["subject"]
-	content = config_data["content"]
+	subject = "subject:From:" + show_user_name + "(" + user + ")"
+	content = "Content____ "
 
 	#=========================================
 	# 处理命令，勿改动
