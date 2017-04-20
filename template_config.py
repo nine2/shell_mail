@@ -49,7 +49,8 @@ config_data = {
 			]
 	,
 # 邮件log
-	"log_path" : os.path.dirname(os.path.abspath(__file__)) + '/send_mail.log'
+# 个人目录下可修改此 log 目录
+	"log_path" : os.environ["HOME"] + '/.mail_send.log'
 }
 
 def get_config():

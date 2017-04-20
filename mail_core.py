@@ -54,7 +54,7 @@ g_sub = ""   # 主题
 g_content = ""  # 内容
 g_attachments = []  # 附件列表
 
-g_log_path = "./send_mail.log"  # 记录发件log
+g_log_path = "./.mail_send.log"  # 记录发件log
 g_server_type = ""  # 寄件服务器类型
 g_have_fix_server = ['eim']   # 使用后缀的用户名
 
@@ -228,6 +228,7 @@ def get_help_info():
 		-a/--attachment_file_path	<eg: -a "/home/xx/xxx.txt" . Default = Null>
 		-t/--server_type	<eg: -t "EIM". Default = Null>
 		-b/--backup		<eg: -b . Default No This Arg! >
+		--no-backup		<eg: --no-backup . not backup! >
 		-l/--log_path		<eg: -l "/home/xx/xxx.log" . Default = "./send_mail.log">
 
 		agrv_eg:
@@ -246,7 +247,7 @@ def main(argv):
 						"show_user_name=",
 						"receiver=","subject=","content=",
 						"attachment_file_path=",
-						"server_type=","backup",
+						"server_type=","backup","no-backup",
 						"log_path=",
 						"help="]
 	# 记录log
@@ -322,6 +323,8 @@ def main(argv):
 			server_type = arg
 		elif opt in ("-b", "--backup"):
 			backup = True
+		elif opt in ("--no-backup"):
+			backup = False
 		elif opt in ("-l", "--log_path"):
 			log_path = arg
 
@@ -336,6 +339,10 @@ def main(argv):
 	fl.write(line + "\n")
 	fl.close()
 	print "=========================== "
+	if not len(receivers):
+		print "Error: no receivers!"
+		print get_help_info()
+		sys.exit(2)
 	set_sender(host, user, pwd, postfix, show_user_name, server_type)
 	send_mail(receivers, subject, content, attachments, backup, log_path)
 
