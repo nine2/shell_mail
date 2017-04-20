@@ -5,6 +5,7 @@ import os
 import sys
 import getpass
 import config
+# import mail_core
 import imp
 
 config_data = config.get_config()
@@ -23,20 +24,23 @@ g_mail_core_path = file_dir + "/mail_core.py"  # 默认
 
 
 def get_help_info():
-	file_name = os.path.basename(__file__)
+	# file_name = os.path.basename(__file__)
 	print "config file: ~/.mail_config.py"
+	print "use: `mailconfig` to get config file"
 	print ""
-	print "python ",file_name, "-r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
+	# print "python ",file_name, "-r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
+	print "mailsend -r 'receiver1' -r 'receiver2' -s 'subject' -c 'content' -a att1(附件) -a att2"
 	print "-s, -c, -a 可省略"
 	print "-r 如果未设置，则只给自己发邮件"
-	print "!!! 注意："
-	print "\t所有传入的单个参数，中间不能有空格! 可使用双引号引起来!"
+	print "!!! 注意：所有传入的单个参数，中间不能有空格! 可使用双引号引起来!"
+	# print "支持的所有参数如下："
+	# print mail_core.get_help_info()
 
 
 def main(argv):
-	# if len(argv) < 1 :
-	print get_help_info()
-		# sys.exit(0)
+	if len(argv) < 1 :
+		print get_help_info()
+		sys.exit(0)
 	#=======================================================
 	# 设置服务器，用户名、口令以及邮箱的后缀, 【可修改部分】
 	#=======================================================
@@ -87,7 +91,7 @@ def main(argv):
 	receivers = config_data["receivers"]
 
 	# 默认主题、内容
-	subject = "subject:From:" + show_user_name + "(" + user + ")"
+	subject = "Subject:From:" + show_user_name + "(" + user + ")"
 	content = "Content____ "
 
 	#=========================================
@@ -106,7 +110,7 @@ def main(argv):
 	if backup > 0:
 		backup = '-b '
 	else:
-		backup = ''
+		backup = '--no-backup '
 
 	cmd = "python {mail_core} -h {h} -u {u} -f {f} {sname} {t} {b} {l} -s '{s}' -c {c} {rs} ".format(
 			mail_core=g_mail_core_path,
