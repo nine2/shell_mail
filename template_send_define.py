@@ -14,7 +14,8 @@ home = os.environ["HOME"]
 home_config_path = home + "/.mail_config.py"
 config_home = {}
 if os.path.isfile(home_config_path):
-	home_config = imp.load_source('module.name', home_config_path)
+	# home_config = imp.load_source('module.name', home_config_path)
+	home_config = imp.load_source('homeMailConfig', home_config_path)
 	config_home = home_config.get_config();
 
 file_abs = os.path.abspath(__file__)
