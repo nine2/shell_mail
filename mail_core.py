@@ -207,6 +207,10 @@ def send_mail2():
 def send_mail(receivers, sub, content, attachments, backup, log_path):
 	if backup:
 		receivers.append(get_sender_email())
+	if not len(receivers):
+		print "Error: no receivers!"
+		print get_help_info()
+		sys.exit(2)
 	set_receivers(receivers)
 	set_sub(sub)
 	set_content(content)
@@ -339,10 +343,6 @@ def main(argv):
 	fl.write(line + "\n")
 	fl.close()
 	print "=========================== "
-	if not len(receivers):
-		print "Error: no receivers!"
-		print get_help_info()
-		sys.exit(2)
 	set_sender(host, user, pwd, postfix, show_user_name, server_type)
 	send_mail(receivers, subject, content, attachments, backup, log_path)
 
