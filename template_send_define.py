@@ -55,7 +55,10 @@ def main(argv):
 		while not config_data["host"].has_key(idx):
 			idx = int(raw_input("please chose a Email: "))
 	else:
-		idx = 1
+		for i, cf in config_data["host"].items():
+			if len(cf):
+				idx = i
+				break
 	if not config_data["host"].has_key(idx):
 		return
 	host_data = config_data["host"][idx]

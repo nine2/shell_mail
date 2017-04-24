@@ -25,13 +25,16 @@ config_data = {
 	# "postfix":"175game.com" ,
 	# server_type='TODO: 如果是user中需要带@的全称的，此处为 eim， 否则，为邮箱后缀'
 	# "server_type" : "eim" ,
+	# 如果只使用一个邮箱，可以将其他的邮箱类型注释掉，也可以在后面添加除这四种以外的其他邮箱
 	"host":{
 		1: {"server_type":"eim", "postfix": "175game.com", "host": "smtp.exmail.qq.com"},
 		2: {"server_type":"163", "postfix": "163.com", "host": "smtp.163.com" },
 		3: {"server_type":"126", "postfix": "126.com", "host": "smtp.126.com" },
 		4: {"server_type":"qq",  "postfix": "qq.com", "host": "smtp.qq.com" },
 	},
-# user="TODO: 改成自己的邮箱,eg: xyz@gmail.com"
+	# user="TODO: 改成自己的邮箱, @前面的部分 ,eg: 完整邮箱为:xyz@gmail.com，user 填写 xyz"，
+	# 在 host 开启了 2，3，4 时，这里最好不填
+    # 如："user":"tl0485"
 	"user":""
 	,
 # show_user_name = "TODO: 改成自己的名字"
