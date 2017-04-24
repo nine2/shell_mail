@@ -26,7 +26,7 @@ mkdir -p $BIN
 args='$@'
 home='$HOME'
 echo "python $cur_dir/send_define.py $args" > $BIN/mailsend.sh
-echo "cp ./config.py  ~/.mail_config.py" > $BIN/mailconfig.sh
+echo "cp ./config.py  $home/.mail_config.py; touch $home/.mail_emails" > $BIN/mailconfig.sh
 echo "cat $home/.mail_emails" > $BIN/catemail.sh
 echo "echo $args >> $home/.mail_emails" > $BIN/addemail.sh
 chmod +x $BIN/mailsend.sh $BIN/mailconfig.sh $BIN/catemail.sh $BIN/addemail.sh
@@ -39,6 +39,7 @@ fi
 mkdir -p $localbin/rm_bk
 for i in $localbin/mailsend $localbin/mailconfig $localbin/catemail $localbin/addemail;
 do
+	[ -e $i ] && [ -L $i ] && unlink $i;
 	[ -e $i ] && mv $i $localbin/rm_bk;
 done
 ln -s $BIN/mailsend.sh $localbin/mailsend
