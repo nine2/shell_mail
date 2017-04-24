@@ -67,7 +67,7 @@ def main(argv):
 	server_type=host_data["server_type"]
 
 	if not len(config_data["user"]):
-		user = raw_input("please input your user: ")
+		user = raw_input("please input your user(just before @): ")
 		config_data["user"] = user
 	else:
 		print "user: ", config_data["user"]
