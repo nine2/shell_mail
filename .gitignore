@@ -58,3 +58,4 @@ config.py
 send*.py
 *.log
 sendmail*.sh
+bin/*.sh
