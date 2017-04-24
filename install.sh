@@ -24,13 +24,15 @@ cur_dir=`pwd`
 BIN=$cur_dir/bin
 mkdir -p $BIN
 args='$@'
+home='$HOME'
 echo "python $cur_dir/send_define.py $args" > $BIN/mailsend.sh
 echo "cp ./config.py  ~/.mail_config.py" > $BIN/mailconfig.sh
-echo "cat $HOME/.mail_emails" > $BIN/catemail.sh
-echo "echo $args >> $HOME/.mail_emails" > $BIN/addemail.sh
+echo "cat $home/.mail_emails" > $BIN/catemail.sh
+echo "echo $args >> $home/.mail_emails" > $BIN/addemail.sh
 chmod +x $BIN/mailsend.sh $BIN/mailconfig.sh $BIN/catemail.sh $BIN/addemail.sh
 
 localbin=$HOME/.local/bin
+# localbin=/usr/local/bin
 if [ ! -d $localbin ];then
 	mkdir -p $localbin
 fi
@@ -39,8 +41,8 @@ for i in $localbin/mailsend $localbin/mailconfig $localbin/catemail $localbin/ad
 do
 	[ -e $i ] && mv $i $localbin/rm_bk;
 done
-ln -s $BIN/mailsend.sh $HOME/.local/bin/mailsend
-ln -s $BIN/mailconfig.sh $HOME/.local/bin/mailconfig
-ln -s $BIN/catemail.sh $HOME/.local/bin/catemail
-ln -s $BIN/addemail.sh $HOME/.local/bin/addemail
+ln -s $BIN/mailsend.sh $localbin/mailsend
+ln -s $BIN/mailconfig.sh $localbin/mailconfig
+ln -s $BIN/catemail.sh $localbin/catemail
+ln -s $BIN/addemail.sh $localbin/addemail
 
