@@ -31,7 +31,7 @@ echo "cat $home/.mail_emails" > $BIN/catemail.sh
 echo "echo $args >> $home/.mail_emails" > $BIN/addemail.sh
 chmod +x $BIN/mailsend.sh $BIN/mailconfig.sh $BIN/catemail.sh $BIN/addemail.sh
 
-localbin=$HOME/.local/bin
+localbin="$HOME/.local/bin"
 # localbin=/usr/local/bin
 if [ ! -d $localbin ];then
 	mkdir -p $localbin
@@ -47,3 +47,6 @@ ln -s $BIN/mailconfig.sh $localbin/mailconfig
 ln -s $BIN/catemail.sh $localbin/catemail
 ln -s $BIN/addemail.sh $localbin/addemail
 
+echo "PATH=$localbin/bin:$PATH"  >> $HOME/.bashrc
+echo "export PATH"  >> $HOME/.bashrc
+source "$HOME/.bashrc"
