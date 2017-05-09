@@ -12,4 +12,10 @@
 
 建议使用时 `cp` 一份模板为 自己使用，尽量不要更改模板文件！
 
-使用时调用指令: sendmailconfig 生成 home 目录配置文件，然后根据说明修改配置文件
+使用时调用指令: mailconfig 生成 home 目录配置文件，然后根据说明修改配置文件
+
+目前指令：
+- mailsend	: 发送邮件
+- mailconfig	: 生成 home 配置
+- addemail	: 添加邮箱通信录
+- catemail	: 显示邮箱通信录

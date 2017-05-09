@@ -14,7 +14,8 @@ home = os.environ["HOME"]
 home_config_path = home + "/.mail_config.py"
 config_home = {}
 if os.path.isfile(home_config_path):
-	home_config = imp.load_source('module.name', home_config_path)
+	# home_config = imp.load_source('module.name', home_config_path)
+	home_config = imp.load_source('homeMailConfig', home_config_path)
 	config_home = home_config.get_config();
 
 file_abs = os.path.abspath(__file__)
@@ -55,7 +56,10 @@ def main(argv):
 		while not config_data["host"].has_key(idx):
 			idx = int(raw_input("please chose a Email: "))
 	else:
-		idx = 1
+		for i, cf in config_data["host"].items():
+			if len(cf):
+				idx = i
+				break
 	if not config_data["host"].has_key(idx):
 		return
 	host_data = config_data["host"][idx]
@@ -64,7 +68,7 @@ def main(argv):
 	server_type=host_data["server_type"]
 
 	if not len(config_data["user"]):
-		user = raw_input("please input your user: ")
+		user = raw_input("please input your user(just before @): ")
 		config_data["user"] = user
 	else:
 		print "user: ", config_data["user"]
